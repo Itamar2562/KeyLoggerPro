@@ -66,5 +66,5 @@ This project is a **keylogger trojan** designed for **self-learning and ethical 
 ## Notes / Warnings
 
 - **Ethical Use Only:** Running this on unauthorized computers is illegal.  
-- Ensure your firewall and antivirus allow connections on the chosen port during testing.  
+- Ensure your firewall and antivirus allow to run the program and connect to the server.  
 - The client runs in the background and will automatically try to reconnect if the server is unreachable.
