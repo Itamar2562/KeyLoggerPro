@@ -10,9 +10,12 @@
 This project is a **keylogger trojan** designed for **self-learning and ethical hacking**.  
 
 - Runs in the background on the client machine.  
-- Captures all keystrokes and sends them to a server.  
-- On the server, data is saved in a folder named `Targets`, with each client creating its own subfolder.  
-- If the connection is lost, the client will **automatically attempt to reconnect**.  
+- Captures **all keystrokes** and sends them to a server.  
+- Takes **screenshots every minute** and sends them to the server.  
+- On the server, all data is saved in a folder named `Targets`. Each client has its **own subfolder**, which contains:
+  - `Keylog.txt` (keystrokes)  
+  - `Screenshots/` (all screenshots captured from the client)  
+- If the connection is lost, the client will **automatically attempt to reconnect**.
 
 ---
 
@@ -20,30 +23,32 @@ This project is a **keylogger trojan** designed for **self-learning and ethical 
 
 ### Server
 - Listens for incoming client connections.  
-- Saves all received keystrokes into organized folders.  
+- Stores all received keystrokes in `Keylog.txt`.  
+- Saves received screenshots into `Screenshots/` inside each client’s folder.  
 
 ### Client
 - Runs on the target machine.  
 - Captures keystrokes using `pynput`.  
-- Continuously attempts to connect and send data to the server.  
+- Captures the screen using `PIL.ImageGrab` and sends screenshots every minute.  
+- Continuously attempts to reconnect if the server is unavailable.  
 
 ---
 
-## How to use
+## How to Use
 
 1. **Configure IP and Port**  
-   - Open `config.json`.  
-   - Change the `IP` field to your server’s IP address.  
-   - Ensure the `PORT` is free and matches the server.
+   - Open `Client/config.json`.  
+   - Change `IP` to your server’s IP address and ensure the port matches the server.  
 
 2. **Run the Server**  
-   - Start the server script on your designated machine.
+   - Execute `Server/server.py` on the server machine.  
 
 3. **Run the Client**  
-   - Execute `client.exe` on the target machine with the config file in the **same folder**.  
+   - Run `Client/client.exe` on the target machine with `config.json` in the **same folder** .  
 
-4. **View Captured Data**  
-   - Keystrokes will appear in the `Targets` folder on the server, separated by client IP.  
+4. **Monitor Captured Data**  
+   - Keystrokes are saved in `Targets/data of <client_ip>/Keylog.txt`.  
+   - Screenshots are saved in `Targets/data of <client_ip>/Screenshots/`.  
 
 ---
 
@@ -53,6 +58,9 @@ This project is a **keylogger trojan** designed for **self-learning and ethical 
 - `socket`  
 - `threading`  
 - `os`  
+- `io`  
+- `PIL.Image`  
+- `datetime`  
 
 ### Client
 - `pynput`  
@@ -60,11 +68,5 @@ This project is a **keylogger trojan** designed for **self-learning and ethical 
 - `time`  
 - `threading`  
 - `json`  
-
----
-
-## Notes / Warnings
-
-- **Ethical Use Only:** Running this on unauthorized computers is illegal.  
-- Ensure your firewall and antivirus allow to run the program and connect to the server.  
-- The client runs in the background and will automatically try to reconnect if the server is unreachable.
+- `PIL.ImageGrab`  
+- `io`  
